@@ -17,11 +17,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "LlamaLanguageModels", dependencies: ["LlamaKit"]),
-        .executableTarget(name: "fmchat", path: "Sources/fmchat"),
         .executableTarget(
-            name: "llamachat",
+            name: "fm_llama",
             dependencies: ["LlamaLanguageModels"],
-            path: "Sources/llamachat"
+            path: "Sources/fm_llama"
         ),
         .testTarget(name: "LlamaLanguageModelsTests", dependencies: ["LlamaLanguageModels"]),
     ],
