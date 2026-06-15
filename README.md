@@ -1,6 +1,6 @@
 # LlamaLanguageModels
 
-`FoundationModels.LanguageModel` support for llama.cpp.
+`FoundationModels.LanguageModel` support for llama.cpp. Leverages the `LanguageModel` and `LanguageModelExecutor` protocols introduced in WWDC 2026 to provide an unified API to llama.cpp GGUF files downloaded from Hugging Face.
 
 Built on [LlamaKit (experimental)](https://github.com/pcuenca/llamakit).
 
