@@ -1,8 +1,8 @@
 # LlamaLanguageModels
 
-`FoundationModels.LanguageModel` support for llama.cpp. Leverages the `LanguageModel` and `LanguageModelExecutor` protocols introduced in WWDC 2026 to provide an unified API to llama.cpp GGUF files downloaded from Hugging Face.
+Foundation Models API for llama.cpp.
 
-Built on [LlamaKit (experimental)](https://github.com/pcuenca/llamakit).
+Leverages the `LanguageModel` and `LanguageModelExecutor` protocols introduced in WWDC 2026. Offers the same API for llama.cpp models downloaded from Hugging Face. Built on the experimental [LlamaKit](https://github.com/pcuenca/llamakit).
 
 ## Usage
 
@@ -38,4 +38,3 @@ swift run fm_llama ggml-org/gemma-4-26B-A4B-it-GGUF:Q4_K_M "Respond in verse"
 - [ ] Tool calling
 - [ ] Reasoning
 - [ ] Constrained generation
-
