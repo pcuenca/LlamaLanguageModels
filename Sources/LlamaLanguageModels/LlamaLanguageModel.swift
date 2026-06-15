@@ -14,10 +14,13 @@ public final class LlamaLanguageModel: LanguageModel {
 
     private let loader: Loader
 
+    // backendLogsEnabled is set on model init but it's a global llama.cpp engine flag: last call wins
     public init(
         modelIdentifier: String,
-        capabilities: LanguageModelCapabilities = .init(capabilities: [])
+        capabilities: LanguageModelCapabilities = .init(capabilities: []),
+        backendLogsEnabled: Bool = false
     ) {
+        LlamaBackend.loggingEnabled = backendLogsEnabled
         self.modelIdentifier = modelIdentifier
         self.capabilities = capabilities
         self.loader = Loader(modelIdentifier: modelIdentifier)
