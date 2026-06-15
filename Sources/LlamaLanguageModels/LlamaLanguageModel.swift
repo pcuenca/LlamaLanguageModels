@@ -122,6 +122,24 @@ public final class LlamaLanguageModel: LanguageModel {
                     )
                 )
             }
+            if request.contextOptions.reasoningLevel != nil {
+                throw LanguageModelError.unsupportedCapability(
+                    .init(
+                        capability: .reasoning,
+                        debugDescription:
+                            "LlamaLanguageModel does not yet support reasoning."
+                    )
+                )
+            }
+            if Self.transcriptContainsAttachments(request.transcript) {
+                throw LanguageModelError.unsupportedCapability(
+                    .init(
+                        capability: .vision,
+                        debugDescription:
+                            "LlamaLanguageModel does not yet support vision or attachment inputs."
+                    )
+                )
+            }
 
             let llamaModel = try await model.loadedModel()
             let session = try LlamaSession(model: llamaModel)
@@ -169,6 +187,24 @@ public final class LlamaLanguageModel: LanguageModel {
                 }
             }
             return messages
+        }
+
+        private static func transcriptContainsAttachments(_ transcript: Transcript) -> Bool {
+            for entry in transcript {
+                let segments: [Transcript.Segment]
+                switch entry {
+                case .instructions(let i): segments = i.segments
+                case .prompt(let p): segments = p.segments
+                case .response(let r): segments = r.segments
+                default: continue
+                }
+                for segment in segments {
+                    if case .attachment = segment {
+                        return true
+                    }
+                }
+            }
+            return false
         }
 
         private static func textContent(from segments: [Transcript.Segment]) -> String {
