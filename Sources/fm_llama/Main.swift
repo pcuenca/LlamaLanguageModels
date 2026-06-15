@@ -27,8 +27,15 @@ struct FMLlama {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             guard !trimmed.isEmpty else { continue }
             do {
-                let response = try await session.respond(to: trimmed)
-                print(response.content)
+                var printed = ""
+                for try await snapshot in session.streamResponse(to: trimmed) {
+                    let cumulative = snapshot.content
+                    let delta = String(cumulative.dropFirst(printed.count))
+                    print(delta, terminator: "")
+                    fflush(stdout)
+                    printed = cumulative
+                }
+                print()
             } catch {
                 printToStderr("error: \(error)\n")
             }
